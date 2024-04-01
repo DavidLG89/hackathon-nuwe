@@ -10,8 +10,8 @@
 	</parent>
 	<groupId>com.hackathon</groupId>
 	<artifactId>hackathon</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>hackathon</name>
+	<version>Java</version>
+	<name>Hackathon</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>21</java.version>

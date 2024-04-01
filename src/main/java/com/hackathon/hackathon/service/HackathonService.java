@@ -1,6 +1,7 @@
 package com.hackathon.hackathon.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,22 +44,53 @@ public class HackathonService {
     }
 
     public List<Item> getAllItems() {
-        return new ArrayList<>(items);
+        return items;
     }
 
     public List<Item> getItemsByType(String type) {
-    	return null;
+        //filtra los items por tipo y los devuelve en una lista
+    	return items.stream().filter(item -> item.getType().equals(type)).toList();
     }
 
     public void addItem(Item item) {
         items.add(item);
     }
 
-	public String makeOffer(String itemName, double amount, Bidder bidder) {
-    	return null;
-	}
+    public String makeOffer(String itemName, double amount, Bidder bidder) {
+        // Buscar el item y guardarlo en una variable
+        Item itemFounded = null;
+        for (Item item : items) {
+            if (item.getName().equals(itemName)) {
+                itemFounded = item;
+                break;
+            }
+        }
+
+        // Si el item no se encuentra en la lista devolver item no encontrado
+        if (itemFounded == null) {
+            return ITEM_NOT_FOUND;
+        }
+
+        // Comprobar que el monto sea mayor a la oferta maxima del item guardado,
+        // actualizar la oferta y devolver oferta aceptada o de ser menor el monto, devolver oferta rechazada
+        if (amount > itemFounded.getHighestOffer()) {
+            itemFounded.setHighestOffer(amount);
+            itemFounded.setCurrentBidder(bidder);
+            return OFFER_ACCEPTED;
+        } else {
+            return OFFER_REJECTED;
+        }
+    }
 
 	public Map<String, String> getWinningBidder() {
-    	return null;
+        //creo un map para los apostadores que ganaron la puja
+        Map<String, String> winningBidders = new HashMap<>();
+        items.forEach(item -> {
+            //comprobando de que el apostador existe, para agregarlo al map
+            if (item.getCurrentBidder() != null) {
+            winningBidders.put(item.getName(), item.getCurrentBidder().getName());
+        }
+    });
+    	return winningBidders;
     }
 }

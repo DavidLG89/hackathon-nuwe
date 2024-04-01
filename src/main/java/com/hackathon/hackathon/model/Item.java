@@ -3,7 +3,7 @@ package com.hackathon.hackathon.model;
 public class Item {
     private String name;
     private double initialPrice;
-    private double highestOffer; // Inicializar la oferta máxima en 0.0
+    private double highestOffer= 0.0; // Inicializar la oferta máxima en 0.0
     private Bidder currentBidder; 
     private String type;
 
